@@ -1,17 +1,49 @@
 ---
-
+import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Berkay Ergin">
+  <header>
+    <h1>Craft matters.</h1>
+		<h2>And engineering is a craft.</h2>
+  </header>
+  <article>
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium nisi
+    nobis voluptatum hic nostrum facilis, dolorem officiis harum dolores quidem
+    soluta esse accusantium quibusdam exercitationem deserunt nesciunt atque.
+    Repellendus, totam.
+  </article>
+</BaseLayout>
+
+<style lang="scss">
+	@use "sass:color";
+
+  header {
+    position: relative;
+    width: 100%;
+    height: 60svh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+    background-image:
+      linear-gradient(color.adjust(#1a281f, $blackness: 5%, $alpha: -0.3)), url("../assets/background.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image:
+      linear-gradient(color.adjust(#1a281f, $blackness: 5%, $alpha: -0.3)),
+      image-set(
+        "../assets/background.avif" type("image/avif"),
+        "../assets/background.jpg" type("image/jpeg")
+      );
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+	h2 {
+		font-size: 1.25rem;
+	}
+</style>

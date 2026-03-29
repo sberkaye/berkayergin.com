@@ -1,0 +1,99 @@
+---
+import { Font } from "astro:assets";
+const { title } = Astro.props;
+---
+
+<style is:global lang="scss">
+  @use "sass:color";
+
+  :root {
+    --bitter-chocolate: #732c2c;
+    --dusk-blue: #4e598c;
+    --lavender-blush: #f3e8ee;
+    --pearl-aqua: #7fd1b9;
+    --evergreen: #1a281f;
+
+    font-family: var(--font-urbanist);
+    color: var(--lavender-blush);
+    background-color: var(--lavender-blush);
+  }
+
+  body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-aleo);
+    margin: 0;
+  }
+
+  nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    gap: 1rem;
+    position: fixed;
+    top: 2rem;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 0 1rem;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--dusk-blue);
+    font-weight: 500;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 200ms;
+    font-size: 1rem;
+  }
+
+  nav a:first-child {
+    justify-self: flex-start;
+  }
+
+  nav a:hover {
+    border-bottom: 2px solid var(--dusk-blue);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      background-color: color.adjust(#1a281f, $blackness: 8%);
+      color: color.adjust(#f3e8ee, $blackness: 1%);
+    }
+
+    nav a {
+      color: var(--pearl-aqua);
+    }
+  }
+</style>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <Font cssVariable="--font-aleo" />
+    <Font cssVariable="--font-urbanist" />
+    <title>{title}</title>
+    <!-- engineering is a craft, craft matters -->
+  </head>
+  <body>
+    <nav>
+      <a href="/">BerkayErgin</a>
+      <a href="/">Philosophy</a>
+      <a href="/blog">Blog</a>
+    </nav>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
