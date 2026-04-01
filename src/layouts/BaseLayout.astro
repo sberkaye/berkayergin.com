@@ -1,75 +1,172 @@
 ---
+import ToggleDarkModeButton from "@components/ToggleDarkModeButton.astro";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 const { title } = Astro.props;
 ---
 
 <style is:global lang="scss">
   @use "sass:color";
+  @use "../sass" as *;
 
-  :root {
-    --bitter-chocolate: #732c2c;
-    --dusk-blue: #4e598c;
-    --lavender-blush: #f3e8ee;
-    --pearl-aqua: #7fd1b9;
-    --evergreen: #1a281f;
-
-    font-family: var(--font-urbanist);
-    color: var(--lavender-blush);
-    background-color: var(--lavender-blush);
+  html {
+    --text-color: #{color.adjust($evergreen, $whiteness: 5%)};
+    --background-color: #{$lavender-blush};
+    --overlay-color: #{color.adjust($lavender-blush, $alpha: -0.35)};
+    --link-color: #{$dusk-blue};
   }
 
   body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-size: 1em;
+    position: relative;
+    overflow-x: hidden;
+    min-height: 100svh;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    font-family: var(--font-urbanist);
+    color-scheme: light dark;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    @include breakpoint(sm) {
+      font-size: 1.2em;
+    }
   }
 
   h1,
   h2,
   h3 {
     font-family: var(--font-aleo);
-    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--link-color);
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 200ms;
+
+    &:hover {
+      border-bottom: 2px solid var(--link-color);
+    }
+
+    svg {
+      filter: invert(36%) sepia(5%) saturate(4813%) hue-rotate(192deg)
+        brightness(90%) contrast(84%);
+    }
+  }
+
+  button {
+    svg {
+      filter: invert(36%) sepia(5%) saturate(4813%) hue-rotate(192deg)
+        brightness(90%) contrast(84%);
+    }
+  }
+
+  article {
+    padding-inline: 2em;
+
+    h1 {
+      margin-top: 3em;
+    }
   }
 
   nav {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-    gap: 1rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-inline: 0.5em;
+    gap: 1em;
     position: fixed;
-    top: 2rem;
+    top: 1em;
     left: 0;
-    width: 100%;
+    right: 0;
     z-index: 10;
-    padding: 0 1rem;
-  }
+    font-weight: 700;
+    font-size: 1.1em;
+    text-align: center;
 
-  nav a {
-    text-decoration: none;
-    color: var(--dusk-blue);
-    font-weight: 500;
-    position: relative;
-    border-bottom: 2px solid transparent;
-    transition: border-bottom 200ms;
-    font-size: 1rem;
-  }
-
-  nav a:first-child {
-    justify-self: flex-start;
-  }
-
-  nav a:hover {
-    border-bottom: 2px solid var(--dusk-blue);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      background-color: color.adjust(#1a281f, $blackness: 8%);
-      color: color.adjust(#f3e8ee, $blackness: 1%);
+    button {
+      margin-left: auto;
     }
 
-    nav a {
-      color: var(--pearl-aqua);
+    @include breakpoint(m) {
+      padding-inline: 1em;
+    }
+  }
+
+  // default user theme
+  @media (prefers-color-scheme: dark) {
+    html {
+      --text-color: #{color.adjust($lavender-blush, $blackness: 3%)};
+      --background-color: #{color.adjust($evergreen, $blackness: 3%)};
+      --overlay-color: #{color.adjust($evergreen, $alpha: -0.25)};
+      --link-color: #{$pearl-aqua};
+    }
+
+    a,
+    button {
+      svg {
+        filter: invert(90%) sepia(11%) saturate(1255%) hue-rotate(103deg)
+          brightness(87%) contrast(87%);
+      }
+    }
+  }
+
+  // user preference classes - if the user wants a different theme than the default
+  html[data-theme="dark"] {
+    --text-color: #{color.adjust($lavender-blush, $blackness: 3%)};
+    --background-color: #{color.adjust($evergreen, $blackness: 3%)};
+    --overlay-color: #{color.adjust($evergreen, $alpha: -0.25)};
+    --link-color: #{$pearl-aqua};
+
+    a,
+    button {
+      svg {
+        filter: invert(90%) sepia(11%) saturate(1255%) hue-rotate(103deg)
+          brightness(87%) contrast(87%);
+      }
+    }
+  }
+
+  html[data-theme="light"] {
+    --text-color: #{color.adjust($evergreen, $whiteness: 5%)};
+    --background-color: #{$lavender-blush};
+    --overlay-color: #{color.adjust($lavender-blush, $alpha: -0.35)};
+    --link-color: #{$dusk-blue};
+
+    a,
+    button {
+      svg {
+        filter: invert(36%) sepia(5%) saturate(4813%) hue-rotate(192deg)
+          brightness(90%) contrast(84%);
+      }
+    }
+  }
+</style>
+
+<!-- need inline styles to recalculate styles on theme change -->
+<style is:inline>
+  html[data-theme="dark"] {
+    #sun-icon {
+      display: inline;
+    }
+
+    #moon-icon {
+      display: none;
+    }
+  }
+
+  html[data-theme="light"] {
+    #sun-icon {
+      display: none;
+    }
+
+    #moon-icon {
+      display: inline;
     }
   }
 </style>
@@ -83,14 +180,53 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <Font cssVariable="--font-aleo" />
     <Font cssVariable="--font-urbanist" />
+
+    <script>
+      import type { TransitionBeforeSwapEvent } from "astro:transitions/client";
+
+      function persistTheme(e: TransitionBeforeSwapEvent) {
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme !== "light" && savedTheme !== "dark") return;
+
+        e.newDocument.documentElement.setAttribute("data-theme", savedTheme);
+      }
+
+      document.addEventListener("astro:before-swap", persistTheme);
+    </script>
+
+    <script is:inline>
+      function getTheme() {
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme) {
+          return savedTheme;
+        }
+
+        console.log("here");
+
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+
+      const theme = getTheme();
+
+      if (theme === "dark" || theme === "light") {
+        document.documentElement.setAttribute("data-theme", theme);
+      }
+    </script>
+
     <title>{title}</title>
+    <ClientRouter />
     <!-- engineering is a craft, craft matters -->
   </head>
   <body>
     <nav>
-      <a href="/">BerkayErgin</a>
-      <a href="/">Philosophy</a>
+      <a href="/">Home</a>
+      <a href="/about">About Me</a>
       <a href="/blog">Blog</a>
+      <ToggleDarkModeButton />
     </nav>
     <main>
       <slot />

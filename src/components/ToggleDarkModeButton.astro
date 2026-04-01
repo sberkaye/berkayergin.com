@@ -1,0 +1,53 @@
+---
+import SunIcon from "@assets/icons/sun.svg";
+import MoonIcon from "@assets/icons/moon.svg";
+---
+
+<style lang="scss">
+  @use "sass:color";
+  @use "../sass" as *;
+
+  button {
+    background: transparent;
+    border-radius: 100%;
+    border: none;
+    display: grid;
+    place-content: center;
+    padding: 0.5em;
+    transition: background-color 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: color.adjust($evergreen, $alpha: -0.8);
+    }
+  }
+</style>
+
+<button id="dark-mode-toggle" aria-label="Toggle theme">
+  <SunIcon width={24} height={24} id="sun-icon" />
+  <MoonIcon width={24} height={24} id="moon-icon" />
+</button>
+
+<script>
+  import { getTheme } from "../scripts/utils";
+
+  function handleToggleDarkModeClick() {
+    const theme = getTheme();
+
+    if (theme === "dark") {
+      document.documentElement.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    }
+  }
+
+  function init() {
+    document
+      .getElementById("dark-mode-toggle")
+      ?.addEventListener("click", handleToggleDarkModeClick);
+  }
+
+  document.addEventListener("astro:page-load", init);
+</script>

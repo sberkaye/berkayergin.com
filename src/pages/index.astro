@@ -1,49 +1,128 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+
+import EmailLogo from "@assets/icons/email.svg";
+import GithubLogo from "@assets/icons/github.svg";
+import LinkedInLogo from "@assets/icons/linkedin.svg";
+
+const emailLink = "mailto:me@berkayergin.com";
+const linkedInLink = "https://www.linkedin.com/in/berkay-ergin/";
+const githubLink = "https://github.com/sberkaye";
 ---
 
-<BaseLayout title="Berkay Ergin">
-  <header>
-    <h1>Craft matters.</h1>
-		<h2>And engineering is a craft.</h2>
-  </header>
-  <article>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium nisi
-    nobis voluptatum hic nostrum facilis, dolorem officiis harum dolores quidem
-    soluta esse accusantium quibusdam exercitationem deserunt nesciunt atque.
-    Repellendus, totam.
-  </article>
-</BaseLayout>
-
 <style lang="scss">
-	@use "sass:color";
+  @use "sass:color";
+  @use "../sass" as *;
 
   header {
-    position: relative;
-    width: 100%;
     height: 60svh;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 1rem;
     background-image:
-      linear-gradient(color.adjust(#1a281f, $blackness: 5%, $alpha: -0.3)), url("../assets/background.jpg");
+      linear-gradient(var(--overlay-color)), url("../assets/home/background.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-image:
-      linear-gradient(color.adjust(#1a281f, $blackness: 5%, $alpha: -0.3)),
+      linear-gradient(var(--overlay-color)),
       image-set(
-        "../assets/background.avif" type("image/avif"),
-        "../assets/background.jpg" type("image/jpeg")
+        "../assets/home/background.avif" type("image/avif"),
+        "../assets/home/background.jpg" type("image/jpeg")
       );
+
+    @include breakpoint(m) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: 1em;
+    }
   }
 
   h1 {
-    font-size: 3rem;
+    font-size: 2.75em;
+    margin-block: 0;
   }
 
-	h2 {
-		font-size: 1.25rem;
-	}
+  h2 {
+    font-size: 1.25em;
+    margin-block: 0;
+    @include breakpoint(m) {
+      font-size: 1.5em;
+    }
+  }
+
+  article {
+    padding-inline: 0.5em;
+
+    & p {
+      text-wrap: pretty;
+
+      & a {
+        white-space: nowrap;
+      }
+    }
+
+    @include breakpoint(sm) {
+      margin-top: 2em;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+
+    & li {
+      margin-top: 0.75em;
+    }
+
+    & a {
+      & span {
+        vertical-align: middle;
+      }
+
+      & svg {
+        vertical-align: middle;
+      }
+    }
+
+    @include breakpoint(m) {
+      padding-inline: 1em;
+    }
+  }
 </style>
+
+<BaseLayout title="Berkay Ergin | Software Engineer">
+  <header>
+    <h1>Berkay Ergin</h1>
+    <h2>Software Engineer</h2>
+  </header>
+  <article>
+    <p>
+      Craft matters. Engineering is a craft, and I pursue mastery of it. Join me
+      in this pursuit by <a href="/blog">reading my thoughts</a> or getting in touch:
+    </p>
+    <ul>
+      <li>
+        <a href={emailLink} target="_blank"
+          ><EmailLogo width={16} height={16} /><span
+            >&nbsp;me@berkayergin.com</span
+          ></a
+        >
+      </li>
+      <li>
+        <a href={githubLink} target="_blank"
+          ><GithubLogo width={16} height={16} /><span>&nbsp;GitHub</span></a
+        >
+      </li>
+      <li>
+        <a href={linkedInLink} target="_blank"
+          ><LinkedInLogo width={16} height={16} /><span>&nbsp;LinkedIn</span></a
+        >
+      </li>
+    </ul>
+  </article>
+</BaseLayout>
