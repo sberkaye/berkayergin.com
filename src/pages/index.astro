@@ -15,23 +15,27 @@ const githubLink = "https://github.com/sberkaye";
   @use "../sass" as *;
 
   header {
-    height: 60svh;
+    height: 66svh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     padding-bottom: 1rem;
     background-image:
-      linear-gradient(var(--overlay-color)), url("../assets/home/background.jpg");
+      linear-gradient(var(--overlay-color)),
+      url("../assets/home/background.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image:
-      linear-gradient(var(--overlay-color)),
-      image-set(
-        "../assets/home/background.avif" type("image/avif"),
-        "../assets/home/background.jpg" type("image/jpeg")
-      );
+
+    @supports (background-image: image-set(url("") type("image/avif"))) {
+      background-image:
+        linear-gradient(var(--overlay-color)),
+        image-set(
+          url("../assets/home/background.avif") type("image/avif"),
+          url("../assets/home/background.jpg") type("image/jpeg")
+        );
+    }
 
     @include breakpoint(m) {
       flex-direction: row;
@@ -44,6 +48,16 @@ const githubLink = "https://github.com/sberkaye";
   h1 {
     font-size: 2.75em;
     margin-block: 0;
+    @include breakpoint(l) {
+      font-size: 3em;
+    }
+    @include breakpoint(xl) {
+      font-size: 3.25em;
+    }
+    @include breakpoint(xxl) {
+      font-size: 3.5em;
+    }
+
   }
 
   h2 {
@@ -51,6 +65,15 @@ const githubLink = "https://github.com/sberkaye";
     margin-block: 0;
     @include breakpoint(m) {
       font-size: 1.5em;
+    }
+    @include breakpoint(l) {
+      font-size: 1.75em;
+    }
+    @include breakpoint(xl) {
+      font-size: 2em;
+    }
+    @include breakpoint(xxl) {
+      font-size: 2.25em;
     }
   }
 

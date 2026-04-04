@@ -1,11 +1,158 @@
 ---
+import ProjectCard from "@components/ProjectCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 
+type Project = {
+  title: string;
+  description: string;
+  backgroundName: string;
+  url: string;
+  techStack: string[];
+};
+
+const projects: Project[] = [
+  {
+    backgroundName: "faye",
+    description:
+      "Faye is an AI companion I built to use simple yet effective CBT techniques to help people overcome their daily hardships.",
+    title: "Faye",
+    url: "https://www.talktofayeai.com",
+    techStack: [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "React Native",
+      "Expo",
+      "TailwindCSS",
+    ],
+  },
+  {
+    backgroundName: "recipify",
+    description:
+      "This is a sample React project that I built to get a sense of consuming and visualizing data while learning React for the first time.",
+    title: "Recipify",
+    url: "https://reactrecipify.netlify.app/",
+    techStack: ["JavaScript", "React", "Material UI"],
+  },
+  {
+    backgroundName: "card-game",
+    description:
+      "In this project, I wanted to experiment with creating fluid animations using react-spring and Sass.",
+    title: "Card Matching Game",
+    url: "https://cardgamereact.netlify.app/",
+    techStack: ["JavaScript", "React", "Sass"],
+  },
+];
 ---
 
+<style lang="scss">
+  @use "../sass" as *;
+
+  article {
+    width: fit-content;
+    .project-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-block: 2em;
+      gap: 1em;
+
+      @include breakpoint(m) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include breakpoint(l) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+</style>
+
 <BaseLayout title="Berkay Ergin | About Me">
-  <article>
-    <h1>Who am I?</h1>
-    <p>Hey there. My name is Berkay. I am a software engineer from Turkey.</p>
-  </article>
+  <section>
+    <article>
+      <h1>Who am I?</h1>
+      <p>
+        Hey there! My name is Berkay. I am a software engineer. But what does
+        <i>being a software engineer</i> even mean? Does it mean I sit in front of
+        a computer all day, hurriedly pressing keys? Does it mean I only eat pizza
+        and drink coffee? Do I never sleep?
+      </p>
+      <p>
+        Well, there are many ways to think about it. But to me, it means finding
+        immense joy in building things that people use. That is essentially what
+        I&apos;ve been doing for more than half a decade: I build things and
+        hope people like them.
+      </p>
+      <p>
+        I also enjoy diving deep into complex subjects, so that I can eventually
+        simplify them once I truly understand. As Albert Einstein once said: <b
+          >&quot;If you can&apos;t explain it simply, you don&apos;t understand
+          it well enough.&quot;</b
+        > That&apos;s one of the main reasons I write on my blog: I go deep in some
+        subject over and over again until I can explain it simply to others, so that
+        I know I've understood it well enough. As another great of the 20<sup
+          >th</sup
+        > century, Richard Feynman, said: <b
+          >&quot;The first principle is that you must not fool yourself and you
+          are the easiest person to fool.&quot;</b
+        > I try not to.
+      </p>
+      <p>
+        Engineering is formally <a
+          href="https://www.merriam-webster.com/dictionary/engineering"
+          target="_blank">defined as</a
+        > &quot;the application of science and mathematics by which the properties
+        of matter and the sources of energy in nature are made useful to people&quot;.
+        I place great emphasis on the <i>made useful to people</i> part. If something
+        is used by people for any reason, works reliably, and doesn&apos;t consume
+        too many resources; I consider it good engineering.
+      </p>
+      <p>
+        That was on overview of how I see myself in a professional sense.
+        Outside of engineering, I enjoy playing strategy games like chess or Age
+        of Empires. I like having a good conversation with my friends and
+        family, and I love spending time with my girlfriend. I also love
+        swimming, I spent my whole childhood in a coastal town and back then you
+        could find me swimming and building sand castles every day. I am
+        passionate about cars and I love driving. I have many dream cars that I
+        hope to be able to drive one day. Oh, and I have a cat named <i>Diego</i
+        >. He&apos;s very dangerous, <i>he is orange</i>.
+      </p>
+      <p>
+        At the end of the day, regardless of what I am doing - whether it&apos;s
+        writing code, playing chess, having a drink with friends - I try to
+        enjoy the process and do it well.
+      </p>
+    </article>
+    <article>
+      <h1>My Work</h1>
+      <p>
+        Besides working professionally, I enjoy building side projects to gain
+        experience with different tools and programming languages. Even now,
+        while building this website, I'm using <a
+          target="_blank"
+          href="https://www.astro.build">Astro</a
+        > for the first time. I enjoy learning new ways to build.
+      </p>
+      <p>
+        Here you can find some of the projects I built for learning, fun or
+        genuinely to help people:
+      </p>
+      <div class="project-container">
+        {
+          projects.map(
+            ({ backgroundName, description, techStack, title, url }) => (
+              <ProjectCard
+                title={title}
+                bgImage={backgroundName}
+                description={description}
+                link={url}
+                techStack={techStack}
+              />
+            ),
+          )
+        }
+      </div>
+    </article>
+  </section>
 </BaseLayout>

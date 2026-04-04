@@ -1,4 +1,8 @@
 ---
+interface Props {
+  title: string;
+}
+
 import ToggleDarkModeButton from "@components/ToggleDarkModeButton.astro";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
@@ -24,6 +28,7 @@ const { title } = Astro.props;
     position: relative;
     overflow-x: hidden;
     min-height: 100svh;
+    min-width: 100vw;
     color: var(--text-color);
     background-color: var(--background-color);
     font-family: var(--font-urbanist);
@@ -67,10 +72,20 @@ const { title } = Astro.props;
   }
 
   article {
-    padding-inline: 2em;
+    padding-inline: 1em;
 
-    h1 {
-      margin-top: 3em;
+    &:first-child {
+      h1 {
+        margin-top: 2.5em;
+      }
+    }
+
+    p {
+      line-height: 1.4;
+    }
+
+    @include breakpoint(m) {
+      padding-inline: 2em;
     }
   }
 
@@ -78,16 +93,24 @@ const { title } = Astro.props;
     display: flex;
     justify-content: start;
     align-items: center;
+    overflow-x: hidden;
     padding-inline: 0.5em;
+    padding-top: 1em;
     gap: 1em;
     position: fixed;
-    top: 1em;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 10;
     font-weight: 700;
     font-size: 1.1em;
     text-align: center;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+
+    &.scrolled {
+      background-color: var(--background-color);
+    }
 
     button {
       margin-left: auto;
@@ -192,10 +215,29 @@ const { title } = Astro.props;
         e.newDocument.documentElement.setAttribute("data-theme", savedTheme);
       }
 
+      function handleScroll() {
+        const navElement = document.querySelector("nav");
+
+        if (!navElement) return;
+
+        if (window.scrollY > 10) {
+          requestAnimationFrame(() => navElement.classList.add("scrolled"));
+        } else {
+          requestAnimationFrame(() => navElement.classList.remove("scrolled"));
+        }
+      }
+
+      function initDocument() {
+        document.addEventListener("scroll", handleScroll, { passive: true });
+      }
+
       document.addEventListener("astro:before-swap", persistTheme);
+      document.addEventListener("astro:page-load", initDocument);
     </script>
 
     <script is:inline>
+      "use strict";
+
       function getTheme() {
         const savedTheme = localStorage.getItem("theme");
 

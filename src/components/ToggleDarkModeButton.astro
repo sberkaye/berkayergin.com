@@ -29,7 +29,17 @@ import MoonIcon from "@assets/icons/moon.svg";
 </button>
 
 <script>
-  import { getTheme } from "../scripts/utils";
+  function getTheme() {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme) {
+      return savedTheme;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
 
   function handleToggleDarkModeClick() {
     const theme = getTheme();

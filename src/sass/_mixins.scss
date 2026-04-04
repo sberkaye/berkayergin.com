@@ -1,11 +1,30 @@
 @mixin breakpoint($breakpoint) {
-  @if $breakpoint == sm {
+  @if $breakpoint ==sm {
     @media (min-width: 45em) {
       @content;
     }
   }
-  @if $breakpoint == m {
+
+  @if $breakpoint ==m {
     @media (min-width: 53.5em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==l {
+    @media (min-width: 64em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==xl {
+    @media (min-width: 120em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==xxl {
+    @media (min-width: 160em) {
       @content;
     }
   }

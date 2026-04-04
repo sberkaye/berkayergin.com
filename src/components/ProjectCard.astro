@@ -1,0 +1,97 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  bgImage: string;
+  link: string;
+  techStack: string[];
+}
+
+const { bgImage, description, link, title, techStack } = Astro.props;
+---
+
+<style lang="scss">
+  .project-card {
+    display: grid;
+    grid-row: auto / span 4;
+    grid-template-rows: 2fr 1fr 1fr;
+    background-color: var(--link-color);
+    border-radius: 10px;
+    border-color: var(--link-color);
+    color: var(--text-color);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0px 0px 8px var(--text-color);
+    }
+
+    &--head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1em;
+      background-position: center;
+      background-size: cover;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      background-repeat: no-repeat;
+
+      @supports (background-image: image-set(url("") type("image/avif"))) {
+        background-image:
+          linear-gradient(var(--overlay-color)),
+          image-set(
+            var(--bg-avif) type("image/avif"),
+            var(--bg) type("image/jpeg")
+          );
+      }
+    }
+
+    h1 {
+      margin: 0;
+      text-wrap: wrap;
+      text-align: center;
+    }
+
+    &--body {
+      color: var(--background-color);
+      padding: 1em;
+    }
+
+    &--footer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 1em;
+      flex-wrap: wrap;
+      gap: 1em;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+
+      span {
+        padding-block: 0.25em;
+        padding-inline: 0.5em;
+        font-weight: 500;
+        border-radius: 6px;
+        background-color: var(--background-color);
+        color: var(--link-color);
+      }
+    }
+  }
+</style>
+
+<a
+  class="project-card"
+  style={`--bg: url("../../public/about/${bgImage}.jpg"); --bg-avif: url("../../public/about/${bgImage}.avif")`}
+  href={link}
+  target="_blank"
+>
+  <div class="project-card--head">
+    <h1>{title}</h1>
+  </div>
+  <div class="project-card--body">
+    <p>{description}</p>
+  </div>
+  <div class="project-card--footer">
+    {techStack.map((tech) => <span>{tech}</span>)}
+  </div>
+</a>
