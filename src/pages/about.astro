@@ -1,6 +1,10 @@
 ---
+import { Picture } from "astro:assets";
 import ProjectCard from "@components/ProjectCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+
+import meAndDiego from "@assets/about/background-1.jpg";
+import meAndGf from "@assets/about/background-2.jpg";
 
 type Project = {
   title: string;
@@ -48,6 +52,26 @@ const projects: Project[] = [
 <style lang="scss">
   @use "../sass" as *;
 
+  .image-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-block: 4em;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+    
+    .me-and-diego {
+      transform: rotate(20deg);
+    }
+  
+    .me-and-gf {
+      transform: rotate(-30deg);
+    }
+  }
+  
   article {
     width: fit-content;
     .project-container {
@@ -124,6 +148,10 @@ const projects: Project[] = [
         enjoy the process and do it well.
       </p>
     </article>
+    <section class="image-container">
+      <Picture class="me-and-diego" width={400} height={300} layout="constrained" src={meAndDiego} alt="picture of me and Diego" formats={["avif", "webp"]} />
+      <Picture class="me-and-gf" width={400} height={300} layout="constrained" src={meAndGf} alt="picture of me with my girlfriend" formats={["avif", "webp"]} />
+    </section>
     <article>
       <h1>My Work</h1>
       <p>
