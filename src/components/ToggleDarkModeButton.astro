@@ -29,6 +29,7 @@ import MoonIcon from "@assets/icons/moon.svg";
 </button>
 
 <script>
+  const buttonId = "dark-mode-toggle";
   function getTheme() {
     const savedTheme = localStorage.getItem("theme");
 
@@ -55,7 +56,7 @@ import MoonIcon from "@assets/icons/moon.svg";
 
   function init() {
     document
-      .getElementById("dark-mode-toggle")
+      .getElementById(buttonId)
       ?.addEventListener("click", handleToggleDarkModeClick);
   }
 

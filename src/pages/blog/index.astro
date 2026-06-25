@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import BlogCard from "@components/BlogCard.astro";
+
+const allBlogPosts = await getCollection("blog");
+const sortedPosts = allBlogPosts.sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+---
+<style lang="scss">
+  .blog-container {
+    display: grid;
+    padding: 1em;
+  }
+</style>
+
+<BaseLayout title="Blog">
+  <section>
+    <article>
+      <h1>My Blog</h1>
+      <p>Here is where I post my ideas and thoughts</p>
+    </article>
+  </section>
+  <section class="blog-container">{sortedPosts.map(post => <BlogCard blogPost={post} />)}</section>
+</BaseLayout>

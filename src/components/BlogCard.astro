@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  blogPost: CollectionEntry<"blog">;
+}
+
+const { blogPost } = Astro.props;
+const { description, publishDate, slug, title } = blogPost.data;
+---
+
+<style lang="scss">
+  @use "../sass" as *;
+
+  a {
+    display: flex;
+    border: 2px solid;
+    flex-direction: column;
+    border-radius: 6px;
+    padding: 0.5rem;
+
+    
+  }
+</style>
+
+<a href={`/blog/${slug}`}>
+  <div>
+    <h3>{title}</h3>
+    <span>{publishDate}</span>
+  </div>
+  <p>{description}</p>
+</a>

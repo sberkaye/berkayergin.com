@@ -207,6 +207,8 @@ const { title } = Astro.props;
     <script>
       import type { TransitionBeforeSwapEvent } from "astro:transitions/client";
 
+      const scrollOffsetToAddBackground = 10;
+
       function persistTheme(e: TransitionBeforeSwapEvent) {
         const savedTheme = localStorage.getItem("theme");
 
@@ -220,7 +222,7 @@ const { title } = Astro.props;
 
         if (!navElement) return;
 
-        if (window.scrollY > 10) {
+        if (window.scrollY > scrollOffsetToAddBackground) {
           requestAnimationFrame(() => navElement.classList.add("scrolled"));
         } else {
           requestAnimationFrame(() => navElement.classList.remove("scrolled"));
@@ -231,11 +233,16 @@ const { title } = Astro.props;
         document.addEventListener("scroll", handleScroll, { passive: true });
       }
 
+      function cleanup() {
+        document.removeEventListener("scroll", handleScroll);
+      }
+
       document.addEventListener("astro:before-swap", persistTheme);
+      document.addEventListener("astro:before-preparation", cleanup);
       document.addEventListener("astro:page-load", initDocument);
     </script>
 
-    <script is:inline>
+    <script>
       "use strict";
 
       function getTheme() {
@@ -244,8 +251,6 @@ const { title } = Astro.props;
         if (savedTheme) {
           return savedTheme;
         }
-
-        console.log("here");
 
         return window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
@@ -266,7 +271,7 @@ const { title } = Astro.props;
   <body>
     <nav>
       <a href="/">Home</a>
-      <a href="/about">About Me</a>
+      <a href="/about">About</a>
       <a href="/blog">Blog</a>
       <ToggleDarkModeButton />
     </nav>

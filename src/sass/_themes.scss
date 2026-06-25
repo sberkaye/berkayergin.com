@@ -1,0 +1,11 @@
+@use "sass:color";
+@forward "variables";
+
+$themes: (
+  darkTheme: ('text-color': color.adjust($lavender-blush, $blackness: 3%),
+    'bg-color': color.adjust($evergreen, $blackness: 3%),
+    'overlay-color': color.adjust($evergreen, $alpha: -0.25)),
+  lightTheme: ('text-color': color.adjust($evergreen, $whiteness: 5%),
+    'bg-color': $lavender-blush,
+    'overlay-color': color.adjust($lavender-blush, $alpha: -0.35))
+);

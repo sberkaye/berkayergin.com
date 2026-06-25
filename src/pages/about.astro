@@ -1,10 +1,6 @@
 ---
-import { Picture } from "astro:assets";
 import ProjectCard from "@components/ProjectCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-
-import meAndDiego from "@assets/about/background-1.jpg";
-import meAndGf from "@assets/about/background-2.jpg";
 
 type Project = {
   title: string;
@@ -52,26 +48,6 @@ const projects: Project[] = [
 <style lang="scss">
   @use "../sass" as *;
 
-  .image-container {
-    display: flex;
-    justify-content: space-evenly;
-    margin-block: 4em;
-
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 6px;
-    }
-    
-    .me-and-diego {
-      transform: rotate(20deg);
-    }
-  
-    .me-and-gf {
-      transform: rotate(-30deg);
-    }
-  }
-  
   article {
     width: fit-content;
     .project-container {
@@ -96,16 +72,17 @@ const projects: Project[] = [
     <article>
       <h1>Who am I?</h1>
       <p>
-        Hey there! My name is Berkay. I am a software engineer. But what does
-        <i>being a software engineer</i> even mean? Does it mean I sit in front of
-        a computer all day, hurriedly pressing keys? Does it mean I only eat pizza
-        and drink coffee? Do I never sleep?
+        Hey there! My name is Berkay. I am a software engineer who specializes
+        in full-stack web development. As an engineer, I But what does
+        <i>being a software engineer</i> mean and why web development?
       </p>
+
       <p>
         Well, there are many ways to think about it. But to me, it means finding
         immense joy in building things that people use. That is essentially what
         I&apos;ve been doing for more than half a decade: I build things and
-        hope people like them.
+        hope people like them. And web development is a great way to reach many
+        people.
       </p>
       <p>
         I also enjoy diving deep into complex subjects, so that I can eventually
@@ -132,26 +109,19 @@ const projects: Project[] = [
         too many resources; I consider it good engineering.
       </p>
       <p>
-        That was on overview of how I see myself in a professional sense.
-        Outside of engineering, I enjoy playing strategy games like chess or Age
-        of Empires. I like having a good conversation with my friends and
+        That was on overview of how I see myself and my field in a professional
+        sense. Outside of engineering, I enjoy playing strategy games like chess
+        or Age of Empires. I like having a good conversation with my friends and
         family, and I love spending time with my girlfriend. I also love
         swimming, I spent my whole childhood in a coastal town and back then you
         could find me swimming and building sand castles every day. I am
-        passionate about cars and I love driving. I have many dream cars that I
-        hope to be able to drive one day. Oh, and I have a cat named <i>Diego</i
-        >. He&apos;s very dangerous, <i>he is orange</i>.
+        passionate about cars and I love driving.
       </p>
       <p>
-        At the end of the day, regardless of what I am doing - whether it&apos;s
-        writing code, playing chess, having a drink with friends - I try to
-        enjoy the process and do it well.
+        At the end of the day, regardless of what I am doing, I try to enjoy the
+        process and do it well.
       </p>
     </article>
-    <section class="image-container">
-      <Picture class="me-and-diego" width={400} height={300} layout="constrained" src={meAndDiego} alt="picture of me and Diego" formats={["avif", "webp"]} />
-      <Picture class="me-and-gf" width={400} height={300} layout="constrained" src={meAndGf} alt="picture of me with my girlfriend" formats={["avif", "webp"]} />
-    </section>
     <article>
       <h1>My Work</h1>
       <p>
